@@ -1,11 +1,12 @@
 const mongoose = require('mongoose');
 
 const getDbUri = () => {
-  return (
-    process.env.MONGODB_URI ||
-    process.env.MONGO_URI ||
-    'mongodb://localhost:27017/pregmed'
-  );
+  const envUri = process.env.MONGODB_URI || process.env.MONGO_URI;
+
+  if (envUri) return envUri;
+
+  // Default local DB (works with MongoDB Compass on the same machine)
+  return 'mongodb://localhost:27017/pregmed';
 };
 
 let cached = global._mongooseCached;
