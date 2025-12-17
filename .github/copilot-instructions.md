@@ -35,18 +35,17 @@ pregmed-mern/
 ├── client/                 # React Frontend
 │   ├── src/
 │   │   ├── components/    # Reusable React components
-│   │   ├── pages/         # Page-level components
 │   │   ├── services/      # API service layer (Axios)
 │   │   ├── context/       # React Context API for state
 │   │   ├── styles/        # CSS stylesheets
+│   │   ├── mock/          # Mock data for development
 │   │   ├── App.js         # Main App component
 │   │   └── index.js       # Entry point
 │   ├── public/            # Static assets
 │   └── package.json       # Frontend dependencies
 ├── server/                # Node.js Backend
 │   ├── models/            # Mongoose schemas/models
-│   ├── routes/            # Express route definitions
-│   ├── controllers/       # Route controller logic
+│   ├── routes/            # Express route definitions (includes controller logic)
 │   ├── middleware/        # Express middleware (auth, validation)
 │   ├── server.js          # Server entry point
 │   ├── seed.js            # Database seeding script
@@ -190,7 +189,7 @@ REACT_APP_API_URL=http://localhost:5000/api
 - Use async/await with try-catch blocks for error handling
 - Implement proper validation using express-validator
 - Use middleware for authentication and authorization
-- Keep route handlers thin; move business logic to controllers
+- Keep route handlers focused; business logic is in the route files
 - Always hash passwords using bcryptjs before storing
 - Use JWT for stateless authentication
 - Implement proper error responses with status codes
@@ -229,7 +228,9 @@ REACT_APP_API_URL=http://localhost:5000/api
 ### Protected Route Middleware (Backend)
 ```javascript
 const auth = require('./middleware/auth');
-router.get('/profile', auth, controller.getProfile);
+router.get('/profile', auth, (req, res) => {
+  // Route handler logic
+});
 ```
 
 ### API Service Pattern (Frontend)
