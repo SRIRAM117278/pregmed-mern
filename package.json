@@ -1,6 +1,11 @@
 {
   "name": "mern-root",
   "version": "1.0.0",
+  "private": true,
+  "workspaces": [
+    "client",
+    "server"
+  ],
   "scripts": {
     "start": "npm run dev",
     "server": "cd server && npm start",
