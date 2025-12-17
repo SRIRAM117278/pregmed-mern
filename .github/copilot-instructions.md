@@ -227,9 +227,10 @@ REACT_APP_API_URL=http://localhost:5000/api
 
 ### Protected Route Middleware (Backend)
 ```javascript
-const auth = require('./middleware/auth');
-router.get('/profile', auth, (req, res) => {
+const { verifyToken } = require('./middleware/auth');
+router.get('/profile', verifyToken, (req, res) => {
   // Route handler logic
+  // req.userId is available from the middleware
 });
 ```
 
