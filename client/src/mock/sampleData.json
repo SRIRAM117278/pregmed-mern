@@ -1,0 +1,35 @@
+{
+  "featuredPosts": [
+    {
+      "id": "post1",
+      "title": "My first trimester experience",
+      "author": "Anjali",
+      "excerpt": "Sharing tips on dealing with morning sickness and fatigue...",
+      "likes": 34,
+      "comments": 8
+    },
+    {
+      "id": "post2",
+      "title": "Question about prenatal vitamins",
+      "author": "Meena",
+      "excerpt": "Should I continue iron supplements if I'm feeling nauseous?",
+      "likes": 12,
+      "comments": 4
+    }
+  ],
+  "demoAccounts": [
+    {
+      "email": "demo.patient@pregmed.local",
+      "password": "Password123!",
+      "firstName": "Demo",
+      "lastName": "Patient"
+    },
+    {
+      "email": "demo.provider@pregmed.local",
+      "password": "Password123!",
+      "firstName": "Demo",
+      "lastName": "Provider",
+      "role": "provider"
+    }
+  ]
+}
