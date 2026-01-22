@@ -1,7 +1,19 @@
 import axios from "axios";
 
-// Local hosting: default to localhost backend. Override via REACT_APP_API_URL if needed.
-const API_BASE_URL = process.env.REACT_APP_API_URL || "http://localhost:5000/api";
+// Determine API base URL:
+// - Development: Use REACT_APP_API_URL (localhost:5000)
+// - Production (Vercel): Use relative path since frontend & API share the same domain
+const getApiBaseUrl = () => {
+  // If explicitly set, use that
+  if (process.env.REACT_APP_API_URL) {
+    return process.env.REACT_APP_API_URL;
+  }
+  
+  // Production: use relative path (same origin)
+  return '/api';
+};
+
+const API_BASE_URL = getApiBaseUrl();
 
 // Create axios instance
 const api = axios.create({

@@ -45,11 +45,38 @@ app.use('/api/health-records', require('./routes/healthRecords'));
 app.use('/api/community', require('./routes/community'));
 app.use('/api/guidance', require('./routes/guidance'));
 
+// Health check endpoint (useful for monitoring)
+app.get('/api/health', (req, res) => {
+  res.json({ 
+    status: 'ok', 
+    timestamp: new Date().toISOString(),
+    environment: process.env.NODE_ENV || 'development'
+  });
+});
+
+// 404 handler for API routes
+app.use('/api/*', (req, res) => {
+  res.status(404).json({ 
+    success: false, 
+    message: `API endpoint not found: ${req.method} ${req.originalUrl}` 
+  });
+});
+
 // Error handling middleware
 // eslint-disable-next-line no-unused-vars
 app.use((err, req, res, next) => {
-  console.error(err.stack);
-  res.status(500).json({ message: 'Something went wrong!' });
+  console.error('❌ Error:', err.message);
+  console.error('Stack:', err.stack);
+  
+  // Don't expose internal errors in production
+  const message = process.env.NODE_ENV === 'production' 
+    ? 'Something went wrong!' 
+    : err.message;
+    
+  res.status(err.status || 500).json({ 
+    success: false,
+    message 
+  });
 });
 
 module.exports = app;
