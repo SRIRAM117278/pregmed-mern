@@ -12,16 +12,25 @@ app.use(
       // Allow non-browser clients (no Origin header)
       if (!origin) return callback(null, true);
 
-      const allowed = new Set([
+      // Allow localhost for development
+      const allowedLocal = [
         'http://localhost:3000',
         'http://127.0.0.1:3000',
         'http://localhost:3001',
         'http://127.0.0.1:3001',
-      ]);
+      ];
 
-      return allowed.has(origin)
-        ? callback(null, true)
-        : callback(new Error('Not allowed by CORS'));
+      // Allow Vercel deployments
+      const isVercel = origin.endsWith('.vercel.app');
+      
+      // Allow custom frontend URL from environment
+      const customFrontend = process.env.FRONTEND_URL;
+
+      if (allowedLocal.includes(origin) || isVercel || origin === customFrontend) {
+        return callback(null, true);
+      }
+
+      return callback(new Error('Not allowed by CORS'));
     },
     credentials: true,
   })
