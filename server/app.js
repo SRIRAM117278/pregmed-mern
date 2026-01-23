@@ -20,13 +20,17 @@ app.use(
         'http://127.0.0.1:3001',
       ];
 
-      // Allow Vercel deployments
-      const isVercel = origin.endsWith('.vercel.app');
-      
-      // Allow custom frontend URL from environment
+      // Allow Netlify deployments (e.g. https://your-site.netlify.app)
+      const isNetlify = origin.endsWith('.netlify.app');
+
+      // Allow custom frontend URL from environment (Render setting FRONTEND_URL)
       const customFrontend = process.env.FRONTEND_URL;
 
-      if (allowedLocal.includes(origin) || isVercel || origin === customFrontend) {
+      if (
+        allowedLocal.includes(origin) ||
+        isNetlify ||
+        (customFrontend && origin === customFrontend)
+      ) {
         return callback(null, true);
       }
 

@@ -1,16 +1,11 @@
 import axios from "axios";
 
-// Determine API base URL:
-// - Development: Use REACT_APP_API_URL (localhost:5000)
-// - Production (Vercel): Use relative path since frontend & API share the same domain
+// Determine API base URL using environment variable.
+// In Netlify/production, set REACT_APP_API_URL to your Render backend URL, e.g.:
+//   https://your-backend.onrender.com/api
+// In local development, you can keep it pointing to http://localhost:5000/api
 const getApiBaseUrl = () => {
-  // If explicitly set, use that
-  if (process.env.REACT_APP_API_URL) {
-    return process.env.REACT_APP_API_URL;
-  }
-  
-  // Production: use relative path (same origin)
-  return '/api';
+  return process.env.REACT_APP_API_URL || "http://localhost:5000/api";
 };
 
 const API_BASE_URL = getApiBaseUrl();
