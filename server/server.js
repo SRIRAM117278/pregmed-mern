@@ -16,7 +16,7 @@ app.use(express.json());
 
 // 2️⃣ CORS setup for Netlify frontend
 app.use(cors({
-  origin: "https://your-site-name.netlify.app", // replace with your Netlify URL
+  origin: "https://pregmed7.netlify.app/login", // replace with your Netlify URL
   credentials: true  // needed if you use cookies or sessions
 }));
 
