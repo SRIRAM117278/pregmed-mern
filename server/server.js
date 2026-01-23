@@ -1,19 +1,7 @@
-const app = require('./app');
-const { connectToDatabase } = require('./db');
+import app from "./api/index.js";
 
-async function start() {
-  try {
-    await connectToDatabase();
-    console.log('MongoDB connected');
+const PORT = process.env.PORT || 5000;
 
-    const PORT = process.env.PORT || 5000;
-    app.listen(PORT, () => {
-      console.log(`Server running on port ${PORT}`);
-    });
-  } catch (err) {
-    console.error('Failed to start server:', err);
-    process.exit(1);
-  }
-}
-
-start();
+app.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}`);
+});
