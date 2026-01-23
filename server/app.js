@@ -3,6 +3,7 @@ require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
 const path = require('path');
+const fs = require('fs');
 
 const app = express();
 
@@ -62,14 +63,20 @@ app.get('/api/health', (req, res) => {
 // Serve React frontend in production (like the example server/index.js)
 if (process.env.NODE_ENV === 'production') {
   const clientBuildPath = path.join(__dirname, '../client/build');
+  const indexHtmlPath = path.join(clientBuildPath, 'index.html');
 
-  // Serve static files from the React app
-  app.use(express.static(clientBuildPath));
+  if (fs.existsSync(indexHtmlPath)) {
+    // Serve static files from the React app
+    app.use(express.static(clientBuildPath));
 
-  // Handle all routes by serving React's index.html
-  app.get('*', (req, res) => {
-    res.sendFile(path.join(clientBuildPath, 'index.html'));
-  });
+    // Handle all non-API routes by serving React's index.html
+    app.get('*', (req, res) => {
+      res.sendFile(indexHtmlPath);
+    });
+  } else {
+    console.warn('⚠️  React build not found at', indexHtmlPath);
+    console.warn('    Ensure the client is built before starting the server.');
+  }
 }
 
 // 404 handler for API routes
