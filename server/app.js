@@ -2,6 +2,7 @@ require('dotenv').config();
 
 const express = require('express');
 const cors = require('cors');
+const path = require('path');
 
 const app = express();
 
@@ -57,6 +58,19 @@ app.get('/api/health', (req, res) => {
     environment: process.env.NODE_ENV || 'development'
   });
 });
+
+// Serve React frontend in production (like the example server/index.js)
+if (process.env.NODE_ENV === 'production') {
+  const clientBuildPath = path.join(__dirname, '../client/build');
+
+  // Serve static files from the React app
+  app.use(express.static(clientBuildPath));
+
+  // Handle all routes by serving React's index.html
+  app.get('*', (req, res) => {
+    res.sendFile(path.join(clientBuildPath, 'index.html'));
+  });
+}
 
 // 404 handler for API routes
 app.use('/api/*', (req, res) => {
