@@ -1,6 +1,12 @@
 [build]
-  command = "cd client && npm install && npm run build"
-  publish = "client/build"
+  # Run the build from the React app folder
+  base = "client"
+  command = "npm run build"
+  publish = "build"
+
+  # Optional but recommended: pin Node to a version compatible with CRA
+  [build.environment]
+    NODE_VERSION = "18"
 
 [[redirects]]
   from = "/*"
